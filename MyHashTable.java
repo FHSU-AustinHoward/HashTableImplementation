@@ -12,15 +12,17 @@ public class MyHashTable<K extends Comparable<K>, V> {
     private int count; // how many elements in table
 
     /**
-     * Constructor. Constructor an empty MyHashTable with given number of Buckets
+     * Constructor. Construct an empty MyHashTable with given number of Buckets
      * @param tableSize The number of Buckets of the table
      */
-    @SuppressWarnings("unchecked")
     public MyHashTable(int tableSize) {
         table = new ArrayList<>(tableSize);
+
+        // Initialize each bucket as an empty ArrayList
         for (int i = 0; i < tableSize; i++) {
             table.add(new ArrayList<>());
         }
+
         count = 0;
     }
 
@@ -44,6 +46,7 @@ public class MyHashTable<K extends Comparable<K>, V> {
      * Clear the table
      */
     public void clear() {
+        // Clear each bucket's list
         for (ArrayList<MyHashEntry<K, V>> chain : table) {
             chain.clear();
         }
@@ -60,6 +63,7 @@ public class MyHashTable<K extends Comparable<K>, V> {
         int index = hash(key);
         ArrayList<MyHashEntry<K, V>> chain = table.get(index);
 
+        // Find the entry with the given key
         for (MyHashEntry<K, V> entry : chain) {
             if (entry.getKey().equals(key)) {
                 return entry.getValue();
@@ -79,13 +83,16 @@ public class MyHashTable<K extends Comparable<K>, V> {
         int index = hash(key);
         ArrayList<MyHashEntry<K, V>> chain = table.get(index);
 
+        // Check if the key already exists
         for (MyHashEntry<K, V> entry : chain) {
             if (entry.getKey().equals(key)) {
+                // Update the value if key already exists
                 entry.setValue(value);
                 return;
             }
         }
 
+        // If the key doesn't exist, add a new entry to the chain
         MyHashEntry<K, V> newEntry = new MyHashEntry<>(key, value);
         chain.add(newEntry);
         count++;
@@ -101,8 +108,10 @@ public class MyHashTable<K extends Comparable<K>, V> {
         int index = hash(key);
         ArrayList<MyHashEntry<K, V>> chain = table.get(index);
 
+        // Find the entry with the given key
         for (MyHashEntry<K, V> entry : chain) {
             if (entry.getKey().equals(key)) {
+                // Remove the entry if key matches
                 chain.remove(entry);
                 count--;
                 return entry.getValue();
@@ -129,10 +138,12 @@ public class MyHashTable<K extends Comparable<K>, V> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
+        // Search each bucket in table
         for (int i = 0; i < table.size(); i++) {
             ArrayList<MyHashEntry<K, V>> chain = table.get(i);
             sb.append("Bucket ").append(i).append(": ");
 
+            // Append each entry to string
             for (MyHashEntry<K, V> entry : chain) {
                 sb.append("(").append(entry.getKey()).append(", ").append(entry.getValue()).append(") ");
             }

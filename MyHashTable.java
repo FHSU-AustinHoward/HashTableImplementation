@@ -33,6 +33,7 @@ public class MyHashTable<K extends Comparable<K>, V>
      */
     public int size(){
 
+        return 0;
     }
 
     /**
@@ -49,6 +50,7 @@ public class MyHashTable<K extends Comparable<K>, V>
      */
     public V get(K key){
 
+        return null;
     }
 
     /**
@@ -67,6 +69,7 @@ public class MyHashTable<K extends Comparable<K>, V>
      */
     public V remove(K key){
 
+        return null;
     }
 
     /**
@@ -75,6 +78,7 @@ public class MyHashTable<K extends Comparable<K>, V>
      */
     public boolean isEmpty(){
 
+        return false;
     }
 
     /**
@@ -83,5 +87,6 @@ public class MyHashTable<K extends Comparable<K>, V>
      */
     public String toString(){
 
+        return "";
     }
 }

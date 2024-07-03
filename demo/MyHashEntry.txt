@@ -27,6 +27,7 @@ public class MyHashEntry<K extends Comparable<K> , V>
      */
     public K getKey(){
 
+        return null;
     }
 
     /**
@@ -43,6 +44,7 @@ public class MyHashEntry<K extends Comparable<K> , V>
      */
     public V getValue(){
 
+        return null;
     }
 
     /**
@@ -67,5 +69,6 @@ public class MyHashEntry<K extends Comparable<K> , V>
      */
     public MyHashEntry<K, V> getNext(){
 
+        return null;
     }
 }

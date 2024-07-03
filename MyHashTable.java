@@ -1,92 +1,155 @@
-
 /**
  * class MyHashTable. A simple HashTable. Handle collision by chain
  *
  * @author Hongbiao Zeng
  * @version Nov 27, 2015
  */
+
 import java.util.ArrayList;
 
-public class MyHashTable<K extends Comparable<K>, V>
-{
-    private ArrayList<MyHashEntry<K, V>> table;
+public class MyHashTable<K extends Comparable<K>, V> {
+    private ArrayList<ArrayList<MyHashEntry<K, V>>> table;
     private int count; // how many elements in table
 
     /**
      * Constructor. Constructor an empty MyHashTable with given number of Buckets
      * @param tableSize The number of Buckets of the table
      */
-    public MyHashTable(int tableSize){
-
+    @SuppressWarnings("unchecked")
+    public MyHashTable(int tableSize) {
+        table = new ArrayList<>(tableSize);
+        for (int i = 0; i < tableSize; i++) {
+            table.add(new ArrayList<>());
+        }
+        count = 0;
     }
 
     /**
-     * constructor. Construct an empty MyHashTable with capacity 10 buckets
+     * Constructor. Construct an empty MyHashTable with capacity 10 buckets
      */
-    public MyHashTable(){
-
+    public MyHashTable() {
+        this(10);
     }
 
     /**
-     * get the number of elements in the table
-     * @return the number of elements in the table
+     * Get the number of elements in the table
+     *
+     * @return The number of elements in the table
      */
-    public int size(){
-
-        return 0;
+    public int size() {
+        return count;
     }
 
     /**
-     * clear the table
+     * Clear the table
      */
-    public void clear(){
-
+    public void clear() {
+        for (ArrayList<MyHashEntry<K, V>> chain : table) {
+            chain.clear();
+        }
+        count = 0;
     }
 
     /**
-     * get the value with given key.
+     * Get the value with given key
+     *
      * @param key The given key
-     * @return the value that have the key matches the given key. If no such a value, return null
+     * @return The value that has the key matching the given key. If no such value, return null
      */
-    public V get(K key){
+    public V get(K key) {
+        int index = hash(key);
+        ArrayList<MyHashEntry<K, V>> chain = table.get(index);
+
+        for (MyHashEntry<K, V> entry : chain) {
+            if (entry.getKey().equals(key)) {
+                return entry.getValue();
+            }
+        }
 
         return null;
     }
 
     /**
-     * insert (key, value) pair into the table
-     * @param key The key of the pair
+     * Insert (key, value) pair into the table
+     *
+     * @param key   The key of the pair
      * @param value The value of the pair
      */
-    public void insert(K key, V value){
+    public void insert(K key, V value) {
+        int index = hash(key);
+        ArrayList<MyHashEntry<K, V>> chain = table.get(index);
 
+        for (MyHashEntry<K, V> entry : chain) {
+            if (entry.getKey().equals(key)) {
+                entry.setValue(value);
+                return;
+            }
+        }
+
+        MyHashEntry<K, V> newEntry = new MyHashEntry<>(key, value);
+        chain.add(newEntry);
+        count++;
     }
 
     /**
-     * remove the value with given key from the table
+     * Remove the value with given key from the table
+     *
      * @param key The given key
-     * @return the value whose key matches the given key. If no such value, null is returned
+     * @return The value whose key matches the given key. If no such value, null is returned
      */
-    public V remove(K key){
+    public V remove(K key) {
+        int index = hash(key);
+        ArrayList<MyHashEntry<K, V>> chain = table.get(index);
+
+        for (MyHashEntry<K, V> entry : chain) {
+            if (entry.getKey().equals(key)) {
+                chain.remove(entry);
+                count--;
+                return entry.getValue();
+            }
+        }
 
         return null;
     }
 
     /**
-     * check if the table is empty,i.e. no entry
-     * @return true if the table holds no elements; false otherwise
+     * Check if the table is empty, i.e., no entry
+     *
+     * @return True if the table holds no elements; false otherwise
      */
-    public boolean isEmpty(){
-
-        return false;
+    public boolean isEmpty() {
+        return count == 0;
     }
 
     /**
-     * return a String representation of the table
-     * @return a String representation of the table
+     * Return a String representation of the table
+     *
+     * @return A String representation of the table
      */
-    public String toString(){
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
-        return "";
+        for (int i = 0; i < table.size(); i++) {
+            ArrayList<MyHashEntry<K, V>> chain = table.get(i);
+            sb.append("Bucket ").append(i).append(": ");
+
+            for (MyHashEntry<K, V> entry : chain) {
+                sb.append("(").append(entry.getKey()).append(", ").append(entry.getValue()).append(") ");
+            }
+
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Computes the hash value for the specified key
+     *
+     * @param key The key to hash
+     * @return The hash value
+     */
+    private int hash(K key) {
+        return Math.abs(key.hashCode()) % table.size();
     }
 }

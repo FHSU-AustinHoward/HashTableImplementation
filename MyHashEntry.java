@@ -1,14 +1,8 @@
 /**
  * class MyHashEntry. A Hash Entry as a single linked list Node
  *
- * @author Hongbiao Zeng
- * @version Dec 11, 2015
- */
-/**
- * class MyHashEntry. A Hash Entry as a single linked list Node
- *
- * @param <K> Key type
- * @param <V> Value type
+ * @author Austin Howard
+ * @version Jul 3, 2024
  */
 
 public class MyHashEntry<K extends Comparable<K>, V> {

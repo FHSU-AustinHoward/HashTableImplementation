@@ -1,8 +1,8 @@
 /**
  * class MyHashTable. A simple HashTable. Handle collision by chain
  *
- * @author Hongbiao Zeng
- * @version Nov 27, 2015
+ * @author Austin Howard
+ * @version Jul 3, 2024
  */
 
 import java.util.ArrayList;

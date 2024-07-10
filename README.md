@@ -1,4 +1,4 @@
-# Project Two: Implement and Apply Stack and Queue
+# Project Three: Hash Table Implementation
 * Austin Howard
 * 2024U_CSCI251_VA - Data Structures
 * Jul 3, 2024
